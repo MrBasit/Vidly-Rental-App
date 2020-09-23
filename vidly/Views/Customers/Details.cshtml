@@ -1,0 +1,35 @@
+﻿@model vidly.Models.Customers
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*@{
+    bool customerexists=false;
+    string customer="none";
+}
+@foreach(var a in Model){
+    
+    if(a.Id == Model.)
+    {
+        customerexists = true;
+        customer = a.Name;
+        
+    } 
+}
+
+@if (customerexists)
+{
+    <h2>@customer</h2>
+
+}
+else
+{
+    <p>Name with this ID don't exists!!</p>
+}*@
+
+<h1>@Model.Name</h1>
+<h3>Type of membership : @Model.MembershipType.Name</h3>
+@if(@Model.DateOfBirth!=null){
+    <h3>Date of birth : @Convert.ToDateTime((Model.DateOfBirth.Value)).ToString("dd/MMM/yyyy")</h3>
+}

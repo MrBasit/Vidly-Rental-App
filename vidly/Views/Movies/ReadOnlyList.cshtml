@@ -1,0 +1,38 @@
+﻿@model List<vidly.Models.Movies>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />    
+<table class="table table-hover" id="MoviesTable">
+    <thead>
+        <tr>
+            <th scope="col"><h4>Movies</h4></th>
+            <th scope="col"><h4>Genre</h4></th>
+        </tr>
+    </thead>
+    <tbody>
+           
+    </tbody>
+</table>
+@section scripts{
+        <script>
+            var table = $("#MoviesTable").DataTable(
+                {
+                    ajax: {
+                        url: "/api/movie",
+                        dataSrc:""
+                    },
+                    columns: [
+                        {
+                            data: "name",
+                          
+                        },
+                        {
+                            data: "moviesGeneres.name"
+                        }
+                    ]
+                }
+            );
+        </script>
+}

@@ -1,0 +1,65 @@
+﻿@model List<vidly.Models.Movies>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.ActionLink("Add New Movie", "New", "Movies", null, new { @class="btn btn-primary mt-5 mb-5"})
+<br />
+<table class="table table-hover" id="MoviesTable">
+    <thead>
+        <tr>
+            <th scope="col"><h4>Movies</h4></th>
+            <th scope="col"><h4>Genre</h4></th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
+@section scripts{
+        <script>
+            var table = $("#MoviesTable").DataTable(
+                {
+                    ajax: {
+                        url: "/api/movie",
+                        dataSrc:""
+                    },
+                    columns: [
+                        {
+                            data: "id",
+                            render: function (data,type,currentObj) {
+                                return '<a href="/movies/edit/' + data + '">' + currentObj.name + '</a>';
+                            }
+                        },
+                        {
+                            data: "moviesGeneres.name"
+                        },
+                        {
+                            data: "id",
+                            render: function (data) {
+                                return '<button class="js-delete btn btn-link" data-movie-id="' + data + '">Delete</button>';
+                            }
+
+                        }
+                    ]
+                }
+            );
+            $(document).ready(function () {
+                $('#MoviesTable').on('click','.js-delete', function () {
+                     var button = $(this);
+                        bootbox.confirm("Are you sure to delete this customer?", function (confirmation) {
+                            if (confirmation) {
+                                $.ajax({
+                                    url: "/api/movie/" + button.attr("data-movie-id"),
+                                    method: "DELETE",
+                                    success: function () {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                    });
+                });
+        </script>
+}
